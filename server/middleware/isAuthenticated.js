@@ -5,17 +5,17 @@ const { SECRET } = process.env;
 
 // creating module to Authenticate the paths
 module.exports = {
-  //writing a fuction to check and see if the user is logged in or authorized
+  //accessing the authentication token from the request headers that should be sent along with each request
   isAuthenticated: (req, res, next) => {
     const headerToken = req.get("Authorization");
-    // checking if dont have an account and then sending back an error
+    // checking if  users dont have an account and then sending back an error immediatelyif they don't
     if (!headerToken) {
       console.log("ERROR IN auth middleware");
       res.sendStatus(401);
     }
-    // setting the token variable
+    // creating a variable to hold our verified token
     let token;
-    // taking the token and varifing it and checking to see if ture or flase
+    // using the jwwt libary along with our secret to verify the user's token. if that doesn't work the error in the catch below will tigger
     try {
       token = jwt.verify(headerToken, SECRET);
     } catch (err) {
@@ -28,7 +28,7 @@ module.exports = {
       error.statusCode = 401;
       throw error;
     }
-
+    //next with move the request along to the appropiate handler function in the appropiate controller
     next();
   },
 };
