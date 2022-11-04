@@ -41,21 +41,41 @@ module.exports = {
     }
   },
 
-  addPost: async (reg, res) => {
+  addPost: async (req, res) => {
    try { 
-    const {title, content, status, userId} = req.body
+        const {title, content, status, userId} = req.body
     await Post.create({title, content, privateStatus: status, userId})
     res.sendStatus(200)
    } catch(err) {
-    console.log('ERROR IN getCurrentUserPost')
+    console.log(err)
+    res.sendStatus(500)
    }
   },
 
-  editPost: (req, res) => {
-    console.log("edit post");
+  editPost: async(req, res) => {
+   try{
+    const {id} = req.params
+    const {status} = req.body
+    await Post.update({privateStatus: status}, {
+      where:{id: +id}
+    })
+    res.sendStatus(200)
+   } catch (err) {
+    console.log("ERROR IN editPost")
+    console.log(err)
+    res.sendStatus(500)
+   }
   },
 
-  deletePost: (req, res) => {
-    console.log("delete post");
+  deletePost: async (req, res) => {
+    try {
+      const {id} = req.params
+      await Post.destroy({where: {id: +id}})
+      res.sendStatus(200)
+    } catch (err) {
+      console.log('ERROR IN deletePost')
+      console.log(err)
+      res.sendStatus(500)
+    }
   },
 };

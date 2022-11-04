@@ -37,8 +37,8 @@ app.get("/posts", getAllPosts);
 
 //grabbing and adding authentication to the users path through middleware
 app.get("/userposts/:userId", getCurrentUserPosts);
-app.get("/posts", isAuthenticated, addPost);
-app.get("posts/:id", isAuthenticated, editPost);
+app.post("/posts", isAuthenticated, addPost);
+app.put("/posts/:id", isAuthenticated, editPost);
 app.delete("/posts/:id", isAuthenticated, deletePost);
 
 // settting the app to listen on the port i set in the .env file

@@ -20,7 +20,7 @@ const Auth = () => {
 
     console.log("submitHandler called");
 
-    const url = "https://socialmtn.devmountain.com";
+    const url = "http://localhost:4000";
 
     axios
       .post(register ? `${url}/register` : `${url}/login`, body)

@@ -19,6 +19,7 @@ const calculateRemainingTime = (exp) => {
 const getLocalData = () => {
   const storedToken = localStorage.getItem("token");
   const storedExp = localStorage.getItem("exp");
+  const userId = localStorage.getItem('userId')
 
   const remainingTime = calculateRemainingTime(storedExp);
 
@@ -31,6 +32,7 @@ const getLocalData = () => {
   return {
     token: storedToken,
     duration: remainingTime,
+    userId: userId
   };
 };
 
@@ -63,6 +65,7 @@ export const AuthContextProvider = (props) => {
 
     localStorage.setItem("token", token);
     localStorage.setItem("exp", exp);
+    localStorage.setItem('userId', userId)
 
     const remainingTime = calculateRemainingTime(exp);
 

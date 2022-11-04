@@ -1,7 +1,7 @@
 require("dotenv").config();
 // IMPORTING
 const {SECRET} = process.env
-const {USER} = '../models/user'
+const {User} = require('../models/user')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
@@ -20,6 +20,7 @@ const createToken = (username, id) => {
 
 module.exports = {
   register: async (req, res) => {
+    console.log(User)
     try {
       const {username, password} = req.body
       let foundUser = await User.findOne({where: {username}})
@@ -34,7 +35,7 @@ module.exports = {
         const exp = Date.now() + 1000 * 60 * 60 * 48
         res.status(200).send({
           username: newUser.dataValues.username,
-          userid: newUser.dataValues.id,
+          userId: newUser.dataValues.id,
           token,
           exp
         }) 
@@ -59,7 +60,7 @@ module.exports = {
             const exp = Date.now() + 1000 * 60 * 60 * 48
             res.status(200).send({
               username: foundUser.dataValues.username,
-              userid: foundUser.dataValues.id,
+              userId: foundUser.dataValues.id,
               token,
               exp
             }) 
